@@ -1,15 +1,19 @@
 // UI enhancements: readable milestone labels + deletable WBS nodes.
 (function(){
+  function setText(el,text){
+    if(el && el.textContent!==text) el.textContent=text;
+  }
+
   function enhanceScheduleCards(){
     document.querySelectorAll('#dashboardView .card.meeting').forEach((card,i)=>{
       const m=data?.meetings?.[i];
       if(!m)return;
       const meta=card.querySelector('.meta');
       const h3=card.querySelector('h3');
-      if(meta)meta.textContent=m.title||`重要時程 ${i+1}`;
+      setText(meta,m.title||`重要時程 ${i+1}`);
       if(h3){
-        if(m.dateLabel) h3.textContent=m.dateLabel;
-        else if(m.date) h3.textContent=`${shortDate(m.date)}　${weekday(m.date)}`;
+        const label=m.dateLabel ? m.dateLabel : (m.date ? `${shortDate(m.date)}　${weekday(m.date)}` : '日期待確認');
+        setText(h3,label);
       }
     });
   }
