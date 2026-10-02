@@ -3,6 +3,26 @@
   const FONT_KEY='genai-pilot-font-size';
   const FONT_CLASSES=['font-sm','font-md','font-lg','font-xl'];
 
+  // WBS 項目改為完全手動維護。
+  // 原本 syncDerived() 會在每次 render 時強制覆寫黃色 gate 節點的時間/標題，
+  // 導致使用者看似能編輯、實際上馬上又被還原。
+  if(typeof syncDerived==='function'){
+    syncDerived=function(target=data){
+      if(!target||typeof target!=='object')return;
+      if(target.project)target.project.meetingCount=Array.isArray(target.meetings)?target.meetings.length:0;
+      const groups=Array.isArray(target.groups)?target.groups:[];
+      if(groups[1]&&target.project?.startDate){
+        groups[1].period=`W1–W3　${shortDate(target.project.startDate)}–${shortDate(addDays(target.project.startDate,20))}`;
+      }
+      if(groups[2]&&target.project?.startDate){
+        groups[2].period=`W4–W12　${shortDate(addDays(target.project.startDate,21))}–${shortDate(addDays(target.project.startDate,83))}`;
+      }
+      if(groups[3]&&target.project?.lockDate&&target.project?.endDate){
+        groups[3].period=`W13–W14　${shortDate(target.project.lockDate)}–${shortDate(target.project.endDate)}`;
+      }
+    };
+  }
+
   function setText(el,text){if(el && el.textContent!==text)el.textContent=text;}
 
   function setByPathSafe(path,value){
