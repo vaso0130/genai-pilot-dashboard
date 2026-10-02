@@ -1,7 +1,7 @@
 /* 2026-10 UI readability improvements */
 body{font-size:16.5px;line-height:1.78}
 h1{font-size:32px}.subtitle{font-size:14.5px}
-button{font-size:14px;padding:9px 13px}
+button,select{font-size:14px;padding:9px 13px}
 .eyebrow{font-size:12px}
 .section h2{font-size:21px}.section h2 span{font-size:14px}
 .fact{padding:18px 20px}.fact small{font-size:13px}.fact strong{font-size:24px}
@@ -18,4 +18,19 @@ button{font-size:14px;padding:9px 13px}
 .modal-card p{font-size:14px}
 .delete-node{position:absolute;right:8px;top:8px;width:26px;height:26px;padding:0;border-color:#7f4555;color:#f1bdc9;background:rgba(127,69,85,.12);display:none;align-items:center;justify-content:center;font-size:16px;line-height:1}
 body.editing .delete-node{display:flex}
-@media(max-width:700px){body{font-size:16px}h1{font-size:27px}.section h2{font-size:19px}.card p,.node p,.row .out{font-size:13.5px}}
+.add-node{width:100%;margin-top:8px;border-style:dashed;color:var(--aqua);background:rgba(63,216,230,.04);display:none}
+body.editing .add-node{display:block}
+.editable-code,.editable-time{border-radius:2px}
+body.editing .editable-code,body.editing .editable-time{outline:1px dashed rgba(63,216,230,.65);outline-offset:2px;cursor:text}
+body.editing .editable-code:focus,body.editing .editable-time:focus{outline:2px solid var(--aqua);background:rgba(63,216,230,.07)}
+.font-size-control{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel);border-radius:5px;padding:3px 6px;color:var(--mute2)}
+.font-size-control label{font-size:12px;white-space:nowrap}
+.font-size-control select{padding:5px 7px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:4px;cursor:pointer}
+
+/* 可由前端切換字級；預設大 */
+body.font-sm{font-size:15.5px}
+body.font-sm h1{font-size:29px}body.font-sm .section h2{font-size:19px}body.font-sm .card h3,body.font-sm .card h4{font-size:15.5px}body.font-sm .card p{font-size:13px}body.font-sm .node h4{font-size:13.5px}body.font-sm .node p{font-size:12px}body.font-sm .index-table{font-size:13px}body.font-sm .row .task{font-size:14px}body.font-sm .row .out{font-size:12.5px}
+body.font-md{font-size:16.5px}
+body.font-lg{font-size:18px}body.font-lg h1{font-size:35px}body.font-lg .subtitle{font-size:16px}body.font-lg .section h2{font-size:23px}body.font-lg .section h2 span{font-size:15px}body.font-lg .fact small{font-size:14px}body.font-lg .fact strong{font-size:26px}body.font-lg .card h3,body.font-lg .card h4{font-size:18.5px}body.font-lg .card p{font-size:15.5px}body.font-lg .metric h4{font-size:16.5px}body.font-lg .metric p{font-size:14.5px}body.font-lg .node h4{font-size:16px}body.font-lg .node p{font-size:14.5px}body.font-lg .index-table{font-size:15.5px}body.font-lg .row .task{font-size:16.5px}body.font-lg .row .out{font-size:15px}body.font-lg .wdate{font-size:12.5px}
+body.font-xl{font-size:20px}body.font-xl h1{font-size:39px}body.font-xl .subtitle{font-size:17px}body.font-xl .section h2{font-size:25px}body.font-xl .section h2 span{font-size:16px}body.font-xl .fact small{font-size:15px}body.font-xl .fact strong{font-size:29px}body.font-xl .card h3,body.font-xl .card h4{font-size:20px}body.font-xl .card p{font-size:17px}body.font-xl .metric h4{font-size:18px}body.font-xl .metric p{font-size:16px}body.font-xl .node h4{font-size:17.5px}body.font-xl .node p{font-size:16px}body.font-xl .index-table{font-size:17px}body.font-xl .row .task{font-size:18px}body.font-xl .row .out{font-size:16.5px}body.font-xl .row .dt{font-size:14.5px}body.font-xl .wdate{font-size:13.5px}
+@media(max-width:700px){body{font-size:16px}h1{font-size:27px}.section h2{font-size:19px}.card p,.node p,.row .out{font-size:13.5px}.font-size-control{order:99;width:100%;justify-content:space-between}}
