@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>生成式 AI 公務應用試辦｜連動儀表板</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="ui-enhancements.css">
 </head>
 <body>
 <div class="app-shell">
@@ -31,7 +32,7 @@
 
   <div class="notice" id="backendNotice" hidden></div>
   <div class="notice" id="editNotice" hidden>
-    編輯模式已開啟：虛線框文字可直接修改；日期與數字請用「專案設定」。目前變更只存在你的本機草稿，按「發布變更」後其他人才會看到。
+    編輯模式已開啟：虛線框文字可直接修改；WBS 卡片右上角 × 可刪除項目；日期與數字請用「專案設定」。目前變更只存在你的本機草稿，按「發布變更」後其他人才會看到。
   </div>
   <div class="notice warning" id="conflictNotice" hidden>
     線上資料已有較新的版本。為避免覆蓋別人的修改，目前草稿暫停發布；請先重新載入線上版本。
@@ -66,7 +67,7 @@
       <label>會議數<input name="meetingCount" type="number" readonly></label>
     </div>
     <label>鎖版日期<input name="lockDate" type="date"></label>
-    <div class="section-title">進度會議</div>
+    <div class="section-title">重要時程</div>
     <div id="meetingInputs"></div>
     <div class="section-title">里程碑</div>
     <div class="grid2">
@@ -104,5 +105,6 @@
 <script src="app-core.js"></script>
 <script src="app-ui.js"></script>
 <script src="app-sync.js"></script>
+<script src="ui-enhancements.js"></script>
 </body>
 </html>
