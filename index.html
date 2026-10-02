@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>生成式 AI 公務應用試辦｜連動儀表板</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">GENERATIVE AI PILOT</div>
+      <h1>生成式 AI 公務應用試辦</h1>
+      <p class="subtitle">單一共用資料源、雙視圖。草稿留在本機，正式發布後所有人同步看到。</p>
+    </div>
+    <div class="toolbar" aria-label="操作工具列">
+      <button class="tab active" data-view="dashboard">推動儀表板</button>
+      <button class="tab" data-view="wbs">WBS</button>
+      <button id="editToggle" class="primary" hidden>✎ 編輯模式</button>
+      <button id="publishBtn" class="publish" hidden disabled>↑ 發布變更</button>
+      <button id="settingsToggle" hidden>專案設定</button>
+      <button id="authBtn">管理者登入</button>
+    </div>
+  </header>
+
+  <div class="syncbar">
+    <div><span id="syncDot" class="sync-dot"></span><span id="syncStatus">正在載入共用資料…</span></div>
+    <div id="lastUpdated" class="sync-meta"></div>
+  </div>
+
+  <div class="notice" id="backendNotice" hidden></div>
+  <div class="notice" id="editNotice" hidden>
+    編輯模式已開啟：虛線框文字可直接修改；日期與數字請用「專案設定」。目前變更只存在你的本機草稿，按「發布變更」後其他人才會看到。
+  </div>
+  <div class="notice warning" id="conflictNotice" hidden>
+    線上資料已有較新的版本。為避免覆蓋別人的修改，目前草稿暫停發布；請先重新載入線上版本。
+    <button id="reloadRemote">重新載入線上版本</button>
+  </div>
+
+  <main>
+    <section id="dashboardView" class="view"></section>
+    <section id="wbsView" class="view" hidden></section>
+  </main>
+
+  <footer>
+    <span>正式資料：Supabase 共用資料庫；管理者草稿：目前瀏覽器 localStorage。</span>
+    <span id="footerVersion">線上版本 —</span>
+  </footer>
+</div>
+
+<aside class="drawer" id="settingsDrawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div><div class="eyebrow">PROJECT SETTINGS</div><h2>專案設定</h2></div>
+    <button id="closeDrawer" aria-label="關閉">×</button>
+  </div>
+  <form id="settingsForm" class="settings-form">
+    <label>專案名稱<input name="title" type="text"></label>
+    <div class="grid2">
+      <label>開始日期<input name="startDate" type="date"></label>
+      <label>結束日期<input name="endDate" type="date"></label>
+    </div>
+    <div class="grid3">
+      <label>參與中心<input name="centers" type="number" min="1"></label>
+      <label>版本數<input name="versionCount" type="number" min="1" max="9"></label>
+      <label>會議數<input name="meetingCount" type="number" readonly></label>
+    </div>
+    <label>鎖版日期<input name="lockDate" type="date"></label>
+    <div class="section-title">進度會議</div>
+    <div id="meetingInputs"></div>
+    <div class="section-title">里程碑</div>
+    <div class="grid2">
+      <label>前置核定<input name="approvalDate" type="date"></label>
+      <label>局內展示<input name="demoDate" type="date"></label>
+      <label>結案<input name="closeDate" type="date"></label>
+      <label>緩衝起日<input name="bufferStart" type="date"></label>
+    </div>
+    <div class="drawer-actions">
+      <button type="button" id="exportJson">匯出 JSON</button>
+      <label class="filebtn">匯入 JSON<input id="importJson" type="file" accept="application/json" hidden></label>
+      <button type="button" id="restorePublished">放棄草稿，恢復線上版</button>
+      <button type="button" id="loadDefaults" class="danger">載入原始資料為草稿</button>
+    </div>
+  </form>
+</aside>
+<div class="backdrop" id="backdrop" hidden></div>
+
+<div class="modal" id="authModal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <button class="modal-close" id="closeAuth" aria-label="關閉">×</button>
+    <div class="eyebrow">ADMIN ACCESS</div>
+    <h2 id="authTitle">管理者登入</h2>
+    <p>輸入已被加入管理者名單的信箱。我們會寄出 Supabase Magic Link，不需要另外設定密碼。</p>
+    <form id="authForm">
+      <label>電子郵件<input id="authEmail" type="email" autocomplete="email" required placeholder="name@example.com"></label>
+      <button type="submit" class="primary">寄送登入連結</button>
+    </form>
+    <p class="modal-note" id="authMessage"></p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
